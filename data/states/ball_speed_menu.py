@@ -13,8 +13,8 @@ class BallSpeedMenu(tools.State, menu_manager.MenuManager):
         self.speeds = [750, 1000, 1250, 1500]
         self.next = 'gameplay'
         self.next_list =['gameplay']
-        self.from_bottom = 200
-        self.spacer = 150
+        # self.from_bottom = 200
+        self.spacer = 100
         
         self.btn_settings = {
             'func' : None,
@@ -30,7 +30,15 @@ class BallSpeedMenu(tools.State, menu_manager.MenuManager):
             'clickable': True,
             'call_on_release' : False
         }
-        self.buttons = button.create_text_button_grid(prep.SCREEN_RECT.centerx, prep.SCREEN_RECT.centery - self.from_bottom, 4, 1, self.speed_options, spacer=150, **self.btn_settings)
+        self.buttons = button.create_text_button_grid(
+            prep.SCREEN_RECT.centerx, 
+            prep.SCREEN_RECT.centery - self.from_bottom, 
+            4, 
+            1, 
+            self.speed_options, 
+            spacer=self.spacer, 
+            **self.btn_settings
+        )
         self.selected_button = 1
         self.pre_render_options()
     

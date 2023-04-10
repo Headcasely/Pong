@@ -13,7 +13,7 @@ class GameplayMenu(tools.State, menu_manager.MenuManager):
         self.options = ['Player 1 Name', 'Player 2 Name', 'Player 1 Colour', 'Player 2 Colour', 'Ball Speed', 'Back']
         self.next_list = ['options', 'options', 'player_1_colour', 'player_2_colour', 'ball_speed', 'options']
         
-        self.from_bottom = 200
+        # self.from_bottom = 200
         self.pre_render_options()
         #self.pre_render_titles()
         

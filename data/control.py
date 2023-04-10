@@ -51,6 +51,9 @@ class Control:
                 self.window_rect = self.window.get_rect()
                 self.screen = self.window.copy()
                 self.state.orientation = prep.get_screen_orientation()
+            if event.type == pg.KEYDOWN:
+                if event.key == pg.K_ESCAPE:
+                    self.done = True
             self.state.get_event(event)
             
     def main_loop(self):

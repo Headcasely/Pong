@@ -15,8 +15,8 @@ class Game(tools.State):
         self.all_sprites = pg.sprite.Group()
         
         # Player sprites
-        self.p1 = player.Player(0 + 200, prep.SCREEN_H/2, self.game_settings['player_1_name'], self.game_settings['Player 1 colour'])
-        self.p2 = player.Player(prep.SCREEN_W - 200, prep.SCREEN_H/2, self.game_settings['player_2_name'], self.game_settings['Player 2 colour'])
+        self.p1 = player.Player(0 + prep.PLAYER_SIZE[0]*2, prep.SCREEN_H/2, self.game_settings['player_1_name'], self.game_settings['Player 1 colour'])
+        self.p2 = player.Player(prep.SCREEN_W - prep.PLAYER_SIZE[0]*2, prep.SCREEN_H/2, self.game_settings['player_2_name'], self.game_settings['Player 2 colour'])
         self.players.add(self.p1, self.p2)
         
             # Ball sprite

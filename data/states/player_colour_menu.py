@@ -7,17 +7,19 @@ class PlayerColourMenu(tools.State, menu_manager.MenuManager):
         tools.State.__init__(self)
         menu_manager.MenuManager.__init__(self)
         self.player = player
-        
+        self.from_bottom = 140
+        self.spacer = 75
         self.title_text, self.title_rect = self.make_title(f'{self.player}', (prep.SCREEN_RECT.centerx, prep.SCREEN_RECT.centery * 0.5))
-        self.title_text2, self.title_rect2 = self.make_title('Colour', (prep.SCREEN_RECT.centerx, prep.SCREEN_RECT.centery * 0.5 + 150))
+        self.title_text2, self.title_rect2 = self.make_title('Colour', (prep.SCREEN_RECT.centerx, prep.SCREEN_RECT.centery * 0.5 + self.spacer))
         self.next = 'gameplay'
         self.options = ['back']
         self.next_list = ['gameplay']
         self.pre_render_options()
-        self.from_bottom = 400
         
+        
+        self.btn_size = [100, 100]
         self.btn_settings = {
-            'weight' : 25,
+            'weight' : 10,
             'border_colour' : 'white'
         }
         
@@ -33,7 +35,7 @@ class PlayerColourMenu(tools.State, menu_manager.MenuManager):
             (125, 0, 125) # purple
         ]
         
-        self.buttons = button.create_colour_button_grid(prep.SCREEN_W // 3 - 150, prep.SCREEN_H // 2 - 200 , 200, 200, 3, 3, 25, self.colour_list, **self.btn_settings)
+        self.buttons = button.create_colour_button_grid(prep.SCREEN_W // 3 - self.btn_size[0]//2 - 25, prep.SCREEN_H // 2 - self.btn_size[1] , self.btn_size[0], self.btn_size[1], 3, 3, 25, self.colour_list, **self.btn_settings)
         self.selected_btn = 0
     
     def cleanup(self):

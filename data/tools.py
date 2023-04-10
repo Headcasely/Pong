@@ -51,6 +51,13 @@ class Font:
         return pg.font.Font(os.path.abspath(p), size)
         
 #other functions
+def resizable_window():
+        DW = 595
+        DH = 1080
+        DS = pg.display.set_mode((DW, DH), pg.RESIZABLE)
+        DW, DH = DS.get_size()
+        return DS
+
 def print_to_file(string):
     with open('debug.txt', 'w', newline='\n') as f:
         f.write(str(string))

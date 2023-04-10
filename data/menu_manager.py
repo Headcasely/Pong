@@ -9,7 +9,7 @@ class MenuManager:
         self.last_option = None
         self.colour = prep.WHITE
         self.from_bottom = 100
-        self.spacer = 150
+        self.spacer = 100
         
         
     def draw_menu(self, screen):
