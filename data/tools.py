@@ -52,10 +52,9 @@ class Font:
         
 #other functions
 def resizable_window():
-        DW = 595
+        DW = 540
         DH = 1080
         DS = pg.display.set_mode((DW, DH), pg.RESIZABLE)
-        DW, DH = DS.get_size()
         return DS
 
 def print_to_file(string):

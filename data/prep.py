@@ -24,7 +24,7 @@ BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 
 # Entity Constants
-BALLSIZE = 10
+BALLSIZE = 15
 PLAYER_SIZE = (50, 100)
 
 # SFX
@@ -38,6 +38,6 @@ SFX['goal'].set_volume(0.1)
 # Fonts
 SPLASH_FONT = tools.Font.load('upheavtt.ttf', 125)
 TITLE_FONT = tools.Font.load('upheavtt.ttf', 96)
-MENU_FONT_D = tools.Font.load('upheavtt.ttf', 60)
+SCORE_FONT = tools.Font.load('upheavtt.ttf', 100)
 MENU_FONT_S = tools.Font.load('upheavtt.ttf', 70)
-SCORE_FONT = tools.Font.load('upheavtt.ttf', 75)
+MENU_FONT_D = tools.Font.load('upheavtt.ttf', 60)

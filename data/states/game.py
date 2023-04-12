@@ -26,7 +26,7 @@ class Game(tools.State):
         self.scoreboard = scoreboard.Scoreboard(self.p1, self.p2)
         self.pitch = pitch.Pitch()
         self.game_over_label = label.Label(None, prep.SCREEN_RECT.center, font=prep.MENU_FONT_S, fill_colour=prep.BLACK, border_colour=prep.WHITE)
-        self.countdown = countdown.Countdown()
+        self.countdown = countdown.Countdown(200, 100)
         
         self.all_sprites.add(self.ball, self.p1, self.p2)
         

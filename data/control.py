@@ -11,8 +11,9 @@ class Control:
         self.__dict__.update(settings)
         self.done = False
         self.window = prep.SCREEN
+        self.window_rect = self.window.get_rect()
         self.screen = prep.SCREEN.copy()
-        self.screen_rect = prep.SCREEN_RECT
+        
         self.clock = pg.time.Clock()
         
     def setup_states(self, state_dict, state_name):
@@ -38,18 +39,15 @@ class Control:
         elif self.state.done:
             self.flip_state()
         self.state.update(screen, dt)
-        self.window.blit(self.screen, (0,0))
+        
     
     def event_loop(self):
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 self.done = True
             if event.type == pg.VIDEORESIZE:
-                prep.SCREEN = pg.display.set_mode((event.w, event.h), pg.FULLSCREEN | pg.RESIZABLE)
-                prep.SCREEN_W, prep.SCREEN_H = prep.SCREEN.get_size()
-                self.window = prep.SCREEN
+                self.window = pg.display.set_mode((event.w, event.h), pg.RESIZABLE)
                 self.window_rect = self.window.get_rect()
-                self.screen = self.window.copy()
                 self.state.orientation = prep.get_screen_orientation()
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_ESCAPE:
@@ -61,7 +59,7 @@ class Control:
             delta_time = self.clock.tick(self.FPS) / 1000
             self.event_loop()
             self.update(self.screen, delta_time)
-            self.window.blit(pg.transform.scale(self.screen, self.window.get_size()), (0, 0))
+            self.window.blit(pg.transform.scale(self.screen, self.window_rect.size), (0, 0))
             pg.display.update()
 
 
@@ -79,7 +77,7 @@ state_dict = {
         'ball_speed' : ball_speed_menu.BallSpeedMenu()
 }
 app = Control(**game_settings)
-app.setup_states(state_dict, 'splash')
+app.setup_states(state_dict, 'game')
 app.main_loop()
 pg.quit()
 sys.exit()

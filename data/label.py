@@ -51,19 +51,20 @@ class Label:
 
 #Test label
 if __name__ == '__main__':
+    import os
     pg.init()
     screen = pg.display.set_mode((600, 400))
     screen_rect = screen.get_rect()
     clock = pg.time.Clock()
     
     class Font:
-        path = 'resources/fonts'
+        path = 'data/resources/fonts'
         @staticmethod
         def load(filename, size=150):
             p = os.path.join(Font.path, filename)
             return pg.font.Font(os.path.abspath(p), size)
     
-    retro_font = Font.load('upheavtt.ttf', 200)
+    retro_font = Font.load('upheavtt.ttf', 100)
     btn_settings = {
         'font' : retro_font,
         'text_colour' : 'white',
