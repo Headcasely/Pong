@@ -12,8 +12,8 @@ class Control:
         self.done = False
         self.window = prep.SCREEN
         self.screen = prep.SCREEN.copy()
-        self.screen_rect = prep.SCREEN_RECT
         self.clock = pg.time.Clock()
+        tools.prints_to_file(f'window size: {self.window.get_size()}', f'screen size: {self.screen.get_size()}')
         
     def setup_states(self, state_dict, state_name):
         self.state_dict = state_dict
@@ -31,39 +31,49 @@ class Control:
         self.state.startup()
         self.state.previous = previous
         
-        
     def update(self, screen, dt):
         if self.state.quit:
             self.done = True
         elif self.state.done:
             self.flip_state()
         self.state.update(screen, dt)
-        self.window.blit(self.screen, (0,0))
+        
     
     def event_loop(self):
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 self.done = True
+                
             if event.type == pg.VIDEORESIZE:
-                prep.SCREEN = pg.display.set_mode((event.w, event.h), pg.FULLSCREEN | pg.RESIZABLE)
-                prep.SCREEN_W, prep.SCREEN_H = prep.SCREEN.get_size()
+                tools.print_to_file('RESIZE EVENT')
+                # Update screen
+                prep.SCREEN_W, prep.SCREEN_H = event.w, event.h
+                prep.SCREEN = pg.display.set_mode((0, 0), pg.FULLSCREEN)
                 self.window = prep.SCREEN
-                self.window_rect = self.window.get_rect()
                 self.screen = self.window.copy()
-                self.state.orientation = prep.get_screen_orientation()
+                prep.SCREEN_RECT = prep.SCREEN.get_rect()
+                # Update object positions
+                for state in self.state_dict.values():
+                    state.orientation = prep.get_screen_orientation()
+                    state.update_object_pos()
+                tools.print_to_file(f'NEW ORIENTATION: {self.state.orientation}')
+                tools.print_to_file('OBJECTS UPDATED')
             self.state.get_event(event)
+            
             
     def main_loop(self):
         while not self.done:
             delta_time = self.clock.tick(self.FPS) / 1000
             self.event_loop()
             self.update(self.screen, delta_time)
-            self.window.blit(pg.transform.scale(self.screen, self.window.get_size()), (0, 0))
-            pg.display.update()
+            self.window.blit(self.screen, (0,0))
+            try:
+                pg.display.update()
+            except Exception as e:
+                tools.print_to_file(f'{e}'.upper())
 
 
 game_settings = settings.user_settings
-
 state_dict = {
         'splash' : splash.Splash(),
         'menu' : mainmenu.MainMenu(),
@@ -77,6 +87,8 @@ state_dict = {
 }
 app = Control(**game_settings)
 app.setup_states(state_dict, 'splash')
+tools.print_to_file('STARTING GAME LOOP')
 app.main_loop()
+tools.print_to_file('EXITING GAME LOOP')
 pg.quit()
 sys.exit()

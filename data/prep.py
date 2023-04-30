@@ -4,24 +4,21 @@ from . import tools, settings
 
 pg.mixer.pre_init(44100, -16, 1, 512)
 pg.init()
-
-def resizable_window():
-        DW = 0
-        DH = 0
-        DS = pg.display.set_mode((DW, DH), pg.FULLSCREEN | pg.RESIZABLE)
-        DW, DH = DS.get_size()
-        return DS
         
 def get_screen_orientation():
-    if SCREEN_W < SCREEN_H:
-        return 'portrait'
-    else:
+    if SCREEN_H < SCREEN_W:
         return 'landscape'
+    else:
+        return 'portrait'
 
-SCREEN = resizable_window()
+
+SCREEN_W, SCREEN_H = 0, 0
+SCREEN = pg.display.set_mode((SCREEN_W, SCREEN_H), pg.FULLSCREEN)
 SCREEN_RECT = SCREEN.get_rect()
-SCREEN_W, SCREEN_H = SCREEN.get_size()
+SCREEN_W, SCREEN_H = SCREEN.get_size() #1080, 2033
+
 ORIENTATION = get_screen_orientation()
+tools.print_to_file(f'STARTING ORIENTATION: {ORIENTATION}')
 
 FPS = 60 
 

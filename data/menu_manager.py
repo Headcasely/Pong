@@ -27,16 +27,16 @@ class MenuManager:
         self.mouse_click_menu(event)
         
     def update_menu(self):
-        pass
+        self.update_object_pos()
         
     def pre_render_options(self):
         deselected_font = prep.MENU_FONT_D
         selected_font = prep.MENU_FONT_S
         rendered_txt = {'des' : [], 'sel' : []}
         for option in self.options:
-            d_font = deselected_font.render(option, 1, prep.WHITE)
+            d_font = deselected_font.render(option, 1, prep.WHITE).convert_alpha()
             d_rect = d_font.get_rect()
-            s_font = selected_font.render(option, 1, prep.WHITE)
+            s_font = selected_font.render(option, 1, prep.WHITE).convert_alpha()
             s_rect = s_font.get_rect()
             rendered_txt['des'].append((d_font, d_rect))
             rendered_txt['sel'].append((s_font, s_rect))
@@ -62,3 +62,10 @@ class MenuManager:
             self.selected_index = 0
         else:
             self.selected_index = i
+    
+    def update_object_pos(self):
+        if self.orientation == 'landscape':
+            self.title_rect.center = (prep.SCREEN_RECT.centerx, prep.SCREEN_RECT.centery * 0.3)
+        else:
+            self.title_rect.center = (prep.SCREEN_RECT.centerx, prep.SCREEN_RECT.centery * 0.5)
+           

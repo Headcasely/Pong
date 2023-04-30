@@ -6,6 +6,7 @@ class Player(pg.sprite.Sprite):
         super().__init__()
         self.name = name
         self.colour = colour
+        self.score = 0
         # Image
         self.image = pg.Surface(prep.PLAYER_SIZE)
         self.image.fill(self.colour)
@@ -17,8 +18,7 @@ class Player(pg.sprite.Sprite):
         self.drag = False
         self.finger = None
         self.pos = pg.math.Vector2(self.rect.center)
-        
-        self.score = 0
+        tools.prints_to_file(f'{self.name} start pos: {self.start_pos}', f'{self.name} rect center: {self.rect.center}')
         
     def get_event_player(self, event):
         self.old_rect = self.rect.copy()
@@ -37,18 +37,23 @@ class Player(pg.sprite.Sprite):
             y = int(event.y * prep.SCREEN.get_height())
             if self.drag and self.finger == event.finger_id:
                 self.fx, self.fy = x, y
-                self.pos.y = self.fy + self.offy
-                self.rect.y = round(self.pos.y)
+                self.rect.y = self.fy + self.offy
+                #self.rect.y = round(self.pos.y)
                 if self.rect.y <= 160:
                     self.rect.y = 160
                 elif self.rect.y + self.rect.height >= prep.SCREEN_H:
                     self.rect.y = prep.SCREEN_H - self.rect.height
+                
                     
         if event.type == pg.FINGERUP:
             if self.finger == event.finger_id:
                 self.drag = False
                     
     def update(self, screen, dt):
+        if self.rect.y <= 160:
+            self.rect.y = 160
+        elif self.rect.y + self.rect.height >= prep.SCREEN_H:
+            self.rect.y = prep.SCREEN_H - self.rect.height
         self.draw(screen)
         
     def draw(self, screen):
@@ -62,6 +67,7 @@ class Player(pg.sprite.Sprite):
         
     def reset_pos(self):
         self.rect.center = self.start_pos
+        self.pos = pg.math.Vector2(self.rect.center)
         
     def update_colour(self):
         self.image.fill(self.colour)

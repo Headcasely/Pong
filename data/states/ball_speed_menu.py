@@ -13,7 +13,7 @@ class BallSpeedMenu(tools.State, menu_manager.MenuManager):
         self.speeds = [750, 1000, 1250, 1500]
         self.next = 'gameplay'
         self.next_list =['gameplay']
-        self.from_bottom = 200
+        self.from_bottom = 100
         self.spacer = 150
         
         self.btn_settings = {
@@ -50,6 +50,7 @@ class BallSpeedMenu(tools.State, menu_manager.MenuManager):
         
     def update(self, screen, dt):
         self.update_menu()
+        self.update_object_pos()
         for btn in self.buttons:
             btn.update()
             if btn.id == self.selected_button:
@@ -78,3 +79,31 @@ class BallSpeedMenu(tools.State, menu_manager.MenuManager):
                 screen.blit(rend_img, rend_rect)
             else:
                 screen.blit(opt[0], opt[1])
+                
+    def update_object_pos(self):
+        if self.orientation == 'landscape':
+            # Update title
+            self.title_rect.center = (prep.SCREEN_RECT.centerx, prep.SCREEN_RECT.centery * 0.3)
+            # Update btns
+            spacer = 20
+            from_bottom = 150
+            self.from_bottom = 200
+            for i, btn in enumerate(self.buttons):
+                btn_x = prep.SCREEN_RECT.centerx
+                btn_y = prep.SCREEN_RECT.centery + i * (btn.rect.h + spacer) - from_bottom
+                btn.rect.center = (btn_x, btn_y)
+                btn.text_rect.center = btn.rect.center
+            # Update back btn
+            for i,opt in enumerate(self.rendered["des"]):
+                opt[1].center = (prep.SCREEN_RECT.centerx, prep.SCREEN_RECT.centery - self.from_bottom + len(self.speed_options) * self.spacer)
+        # If portrait
+        else:
+            # Update title
+            self.title_rect.center = (prep.SCREEN_RECT.centerx, prep.SCREEN_RECT.centery * 0.5)
+            spacer = 20
+            self.from_bottom = 100
+            #update btns
+            for i, btn in enumerate(self.buttons):
+                btn_x = prep.SCREEN_RECT.centerx
+                btn_y = prep.SCREEN_RECT.centery + i * (btn.rect.h + spacer) - self.from_bottom
+                btn.rect.center = (btn_x, btn_y)

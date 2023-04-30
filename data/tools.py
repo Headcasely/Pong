@@ -1,4 +1,4 @@
-import os
+import os, datetime
 import pygame as pg
 from . import prep
 
@@ -27,7 +27,7 @@ class State:
         pass
         
     def make_title(self, text, pos):
-        title_text = prep.TITLE_FONT.render(text, 1, prep.WHITE)
+        title_text = prep.TITLE_FONT.render(text, 1, prep.WHITE).convert_alpha()
         title_text_rect = title_text.get_rect(center = pos)
         return (title_text, title_text_rect)
         
@@ -52,6 +52,13 @@ class Font:
         
 #other functions
 def print_to_file(string):
-    with open('debug.txt', 'w', newline='\n') as f:
-        f.write(str(string))
+    format = f'[{datetime.datetime.now()}] : {string} \n'
+    with open('debug.txt', 'a') as f:
+        f.write(format)
+        
+def prints_to_file(*args):
+    for arg in args:
+        format = f'[{datetime.datetime.now()}] : {arg} \n'
+        with open('debug.txt', 'a') as f:
+            f.write(format)
         

@@ -23,3 +23,6 @@ class Splash(tools.State):
         
     def draw(self, screen):
         screen.blit(self.text, self.text_rect)
+        
+    def update_object_pos(self):
+        pass
