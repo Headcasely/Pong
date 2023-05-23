@@ -2,6 +2,7 @@ from .. import prep
 from .. import tools
 from .. import menu_manager
 
+
 class Options(tools.State, menu_manager.MenuManager):
     def __init__(self):
         tools.State.__init__(self)
@@ -11,8 +12,6 @@ class Options(tools.State, menu_manager.MenuManager):
         self.options = ['Gameplay', 'Audio', 'Back']
         self.next_list = ['gameplay', 'audio', 'menu']
         self.pre_render_options()
-        #self.from_bottom = 150
-#        self.spacer = 200
         
     def cleanup(self):
         self.selected_index = None
@@ -32,4 +31,3 @@ class Options(tools.State, menu_manager.MenuManager):
         screen.blit(self.title_text, self.title_rect)
         self.draw_menu(screen)
         
-    

@@ -1,5 +1,6 @@
 from .. import prep, tools, menu_manager
 
+
 class ColourPlayerSelect(tools.State, menu_manager.MenuManager):
     def __init__(self):
         tools.State.__init__(self)
@@ -8,7 +9,7 @@ class ColourPlayerSelect(tools.State, menu_manager.MenuManager):
         self.title_text2, self.title_rect2 = self.make_title('Colours', (prep.SCREEN_RECT.centerx, prep.SCREEN_RECT.centery * 0.5 + 150))
         self.title_text_ls, self.title_rect_ls = self.make_title(f'Player Colours', (prep.SCREEN_RECT.centerx, prep.SCREEN_RECT.centery * 0.3))
         self.next = 'gameplay'
-        self.options = ['Player 1', 'Player2', 'Back']
+        self.options = ['Player 1', 'Player 2', 'Back']
         self.next_list = ['player_1_colour', 'player_2_colour', 'gameplay']
         self.pre_render_options()
         
@@ -33,4 +34,12 @@ class ColourPlayerSelect(tools.State, menu_manager.MenuManager):
         else:
             screen.blit(self.title_text_ls, self.title_rect_ls)
         self.draw_menu(screen)
+        
+    def update_object_pos(self):
+        if self.orientation == 'landscape':
+            # Update title
+            self.title_rect_ls.center = (prep.SCREEN_RECT.centerx, prep.SCREEN_RECT.centery * 0.3)
+        else:
+            self.title_rect.center = (prep.SCREEN_RECT.centerx, prep.SCREEN_RECT.centery * 0.5)
+            self.title_rect2.center = (prep.SCREEN_RECT.centerx, prep.SCREEN_RECT.centery * 0.5 + 150)
         

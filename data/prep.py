@@ -4,7 +4,8 @@ from . import tools, settings
 
 pg.mixer.pre_init(44100, -16, 1, 512)
 pg.init()
-        
+
+
 def get_screen_orientation():
     if SCREEN_H < SCREEN_W:
         return 'landscape'

@@ -1,14 +1,13 @@
 import pygame as pg
 
+
 class Button:
     def __init__(self, rect, id=None, msg=None, **kwargs):
         self.id = id
         self.msg = msg
         self.rect = pg.Rect(rect)
-        #self.rect.center = self.rect.topleft
         self.surface = pg.Surface(self.rect.size)
         
-        #self.surf_rect = self.surface.get_rect(center = (x, y))
         self.process_kwargs(kwargs)
         self.render_text(self.msg)
         self.render_surface()
@@ -18,7 +17,6 @@ class Button:
     def process_kwargs(self, kwargs):
         settings = {
             'func' : None,
-            
             'font' : pg.font.Font(None, 50),
             'text_colour' : 'white',
             'fill' : True,
@@ -93,9 +91,7 @@ class Button:
                     self.func()
         self.clicked = False
 
-def btn_function():
-        pass
-        
+
 def create_colour_button_grid(x, y, w, h, rows=1, cols=2, spacer=10, colour_list=None, **btn_settings):
     btns = []
     if colour_list is None:
@@ -108,7 +104,8 @@ def create_colour_button_grid(x, y, w, h, rows=1, cols=2, spacer=10, colour_list
             colour = colour_list[btn_id]
             btns.append(Button((btn_x, btn_y, w, h), btn_id, fill_colour=colour, **btn_settings))
     return btns
-    
+ 
+   
 def create_text_button_grid(x, y, rows,cols, text_list, w=0, h=0, spacer=10, **btn_settings):
     btns = []
     for row in range(rows):
@@ -120,47 +117,3 @@ def create_text_button_grid(x, y, rows,cols, text_list, w=0, h=0, spacer=10, **b
             btns.append(Button((btn_x, btn_y, 0, 0), btn_id, **btn_settings, msg=text))
     return btns
         
-if __name__ == '__main__':
-    pg.init()
-    screen = pg.display.set_mode((600, 400))
-    screen_rect = screen.get_rect()
-    clock = pg.time.Clock()
-    WIDTH = screen.get_width()
-    
-    class Font:
-        path = 'resources/fonts'
-        @staticmethod
-        def load(filename, size=150):
-            p = os.path.join(Font.path, filename)
-            return pg.font.Font(os.path.abspath(p), size)
-    
-    retro_font = Font.load('upheavtt.ttf', 200)
-    btn_settings = {
-        'weight' : 50,
-        'font' : retro_font,
-        'text_colour' : 'white',
-        'fill_colour' : 'black',
-        'padding' : 100,
-        'border_colour' : 'white'
-    }
-    
-    
-    btns = create_button_grid(0,0, 200,200, 2, 4, 50, **btn_settings)
-    
-    #btn = Button((screen_rect.centerx, 500, 300, 300), btn_function, **btn_settings)
-    
-    while True:
-        clock.tick(60)
-        
-        events = pg.event.get()
-        for event in events:
-            if event.type == pg.QUIT:
-                pg.quit()
-            for btn in btns:
-                btn.get_event_button(event)
-                
-        screen.fill('grey')
-        for btn in btns:
-            btn.update()
-            btn.draw(screen)
-        pg.display.flip()

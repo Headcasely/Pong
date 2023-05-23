@@ -1,6 +1,7 @@
 import pygame as pg
 from .. import prep, tools, menu_manager
 
+
 class MainMenu(tools.State, menu_manager.MenuManager):
     def __init__(self):
         tools.State.__init__(self)
@@ -10,8 +11,6 @@ class MainMenu(tools.State, menu_manager.MenuManager):
         self.options = ['Play', 'Options', 'Quit']
         self.next_list = ['game', 'options']
         self.pre_render_options()
-        #self.from_bottom = 150
-#        self.spacer = 200
         
     def cleanup(self):
         self.selected_index = None
@@ -31,4 +30,3 @@ class MainMenu(tools.State, menu_manager.MenuManager):
         screen.blit(self.title_text, self.title_rect)
         self.draw_menu(screen)
         
-    

@@ -1,6 +1,7 @@
 import pygame as pg
 from . import prep
 
+
 class Scoreboard:
     def __init__(self, p1, p2):
         self.font = prep.SCORE_FONT

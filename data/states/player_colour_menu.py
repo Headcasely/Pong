@@ -12,9 +12,9 @@ class PlayerColourMenu(tools.State, menu_manager.MenuManager):
         self.title_text2, self.title_rect2 = self.make_title('Colour', (prep.SCREEN_RECT.centerx, prep.SCREEN_RECT.centery * 0.5 + 150))
         self.title_text_ls, self.title_rect_ls = self.make_title(f'{self.player} Colour', (prep.SCREEN_RECT.centerx, prep.SCREEN_RECT.centery * 0.3))
         
-        self.next = 'gameplay'
+        self.next = 'colour_player_select'
         self.options = ['back']
-        self.next_list = ['gameplay']
+        self.next_list = ['colour_player_select']
         self.pre_render_options()
         self.from_bottom = 367
         
@@ -71,7 +71,6 @@ class PlayerColourMenu(tools.State, menu_manager.MenuManager):
             btn.draw(screen)
     
     def draw_menu(self, screen):
-        #screen.blit(self.title, self.title_rect)
         for i,opt in enumerate(self.rendered["des"]):
             opt[1].center = (prep.SCREEN_RECT.centerx, prep.SCREEN_RECT.h - self.from_bottom + i * self.spacer)
             if i == self.selected_index:
@@ -84,9 +83,6 @@ class PlayerColourMenu(tools.State, menu_manager.MenuManager):
     def return_button_colour(self, btn_id):
         return btn.fill_colour
         
-    def select_colour(self):
-        pass
-        
     def update_object_pos(self):
         if self.orientation == 'landscape':
             self.title_rect_ls.center = (prep.SCREEN_RECT.centerx, prep.SCREEN_RECT.centery * 0.3)
@@ -98,7 +94,6 @@ class PlayerColourMenu(tools.State, menu_manager.MenuManager):
             id = 0
             for row in range(3):
                 for col in range(3):
-                    
                     btn_x = x + col * (btn_size + spacer)
                     btn_y = y + row * (btn_size + spacer)
                     self.buttons[id].rect.topleft = (btn_x, btn_y)

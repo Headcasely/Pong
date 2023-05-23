@@ -1,6 +1,7 @@
 import pygame as pg
 from . import prep, tools
 
+
 class Player(pg.sprite.Sprite):
     def __init__(self, x, y, name, colour):
         super().__init__()
@@ -18,7 +19,6 @@ class Player(pg.sprite.Sprite):
         self.drag = False
         self.finger = None
         self.pos = pg.math.Vector2(self.rect.center)
-        tools.prints_to_file(f'{self.name} start pos: {self.start_pos}', f'{self.name} rect center: {self.rect.center}')
         
     def get_event_player(self, event):
         self.old_rect = self.rect.copy()
@@ -38,13 +38,11 @@ class Player(pg.sprite.Sprite):
             if self.drag and self.finger == event.finger_id:
                 self.fx, self.fy = x, y
                 self.rect.y = self.fy + self.offy
-                #self.rect.y = round(self.pos.y)
                 if self.rect.y <= 160:
                     self.rect.y = 160
                 elif self.rect.y + self.rect.height >= prep.SCREEN_H:
                     self.rect.y = prep.SCREEN_H - self.rect.height
                 
-                    
         if event.type == pg.FINGERUP:
             if self.finger == event.finger_id:
                 self.drag = False
@@ -68,6 +66,8 @@ class Player(pg.sprite.Sprite):
     def reset_pos(self):
         self.rect.center = self.start_pos
         self.pos = pg.math.Vector2(self.rect.center)
+        self.old_rect = self.rect.copy()
         
     def update_colour(self):
         self.image.fill(self.colour)
+        

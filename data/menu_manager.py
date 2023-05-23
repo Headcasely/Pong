@@ -11,9 +11,7 @@ class MenuManager:
         self.from_bottom = 100
         self.spacer = 150
         
-        
     def draw_menu(self, screen):
-        #screen.blit(self.title, self.title_rect)
         for i,opt in enumerate(self.rendered["des"]):
             opt[1].center = (prep.SCREEN_RECT.centerx, prep.SCREEN_RECT.centery - self.from_bottom + i * self.spacer)
             if i == self.selected_index:

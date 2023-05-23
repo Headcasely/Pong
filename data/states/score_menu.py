@@ -2,6 +2,7 @@ import pygame as pg
 
 from .. import prep, tools, menu_manager, settings, button
 
+
 class ScoreMenu(tools.State, menu_manager.MenuManager):
     def __init__(self):
         tools.State.__init__(self)
@@ -20,7 +21,6 @@ class ScoreMenu(tools.State, menu_manager.MenuManager):
         
         self.btn_settings = {
             'func' : None,
-            
             'font' : prep.SCORE_FONT,
             'text_colour' : 'white',
             'fill' : False,

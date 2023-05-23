@@ -2,6 +2,7 @@ import pygame as pg
 
 from .. import prep, tools, menu_manager, settings, button
 
+
 class BallSpeedMenu(tools.State, menu_manager.MenuManager):
     def __init__(self):
         tools.State.__init__(self)
@@ -18,7 +19,6 @@ class BallSpeedMenu(tools.State, menu_manager.MenuManager):
         
         self.btn_settings = {
             'func' : None,
-            
             'font' : prep.MENU_FONT_D,
             'text_colour' : 'white',
             'fill' : False,
@@ -59,7 +59,6 @@ class BallSpeedMenu(tools.State, menu_manager.MenuManager):
             else:
                 btn.border = False
                 btn.border_colour = None
-            
         self.draw(screen)
         
     def draw(self, screen):
@@ -107,3 +106,4 @@ class BallSpeedMenu(tools.State, menu_manager.MenuManager):
                 btn_x = prep.SCREEN_RECT.centerx
                 btn_y = prep.SCREEN_RECT.centery + i * (btn.rect.h + spacer) - self.from_bottom
                 btn.rect.center = (btn_x, btn_y)
+                

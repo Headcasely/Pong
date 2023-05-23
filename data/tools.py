@@ -2,6 +2,7 @@ import os, datetime
 import pygame as pg
 from . import prep
 
+
 class State:
     def __init__(self):
         self.done = False
@@ -9,7 +10,6 @@ class State:
         self.next = None
         self.previous = None
         self.orientation = prep.ORIENTATION
-        
         
     def cleanup(self):
         pass
@@ -31,7 +31,6 @@ class State:
         title_text_rect = title_text.get_rect(center = pos)
         return (title_text, title_text_rect)
         
-#gfx
 
 #sfx
 def load_all_sfx(directory):
@@ -42,6 +41,7 @@ def load_all_sfx(directory):
             sound_effects[name] = pg.mixer.Sound(os.path.join(directory, file))
     return sound_effects
     
+    
 #fonts
 class Font:
     path = 'data/resources/fonts'
@@ -50,11 +50,13 @@ class Font:
         p = os.path.join(Font.path, filename)
         return pg.font.Font(os.path.abspath(p), size)
         
+        
 #other functions
 def print_to_file(string):
     format = f'[{datetime.datetime.now()}] : {string} \n'
     with open('debug.txt', 'a') as f:
         f.write(format)
+        
         
 def prints_to_file(*args):
     for arg in args:

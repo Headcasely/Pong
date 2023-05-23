@@ -1,7 +1,7 @@
 import pygame as pg
 from .. import prep, tools, settings
 from .. import player, ball, scoreboard, pitch, countdown, label
-from ..tools import print_to_file as ptf
+
 
 class Game(tools.State):
     def __init__(self):
@@ -74,7 +74,6 @@ class Game(tools.State):
     def reset_players(self, players):
         for player in players:
             player.reset_pos()
-            ptf(f'PLAYER POS RESET: {player.rect.center}, {player.pos} ')
             player.reset_score()
             
     def startup(self):
@@ -117,17 +116,18 @@ class Game(tools.State):
             relative_y = y / old_screen_h
             new_y = relative_y * new_screen_h
             self.p1.rect.center = (x, round(new_y))
-            self.p1.pos = pg.math.Vector2(self.p1.rect.center)
+            self.p1.pos = pg.math.Vector2(self.p1.rect.topleft)
             self.p1.start_pos = (200, prep.SCREEN_H // 2 + tb)
-            
+            self.p1.old_rect = self.p1.rect.copy()
             # Update p2 pos
             x = prep.SCREEN_W - 200
             y = self.p2.rect.centery
             relative_y = y / old_screen_h
             new_y = relative_y * new_screen_h
             self.p2.rect.center = (x, round(new_y))
-            self.p2.pos = pg.math.Vector2(self.p2.rect.center)
+            self.p2.pos = pg.math.Vector2(self.p2.rect.topleft)
             self.p2.start_pos = (prep.SCREEN_W - 200, prep.SCREEN_H // 2 + tb)
+            self.p2.old_rect = self.p2.rect.copy()
             # Update ball pos
             x = self.ball.rect.centerx
             y = self.ball.rect.centery
@@ -136,32 +136,28 @@ class Game(tools.State):
             new_x = relative_x * new_screen_w
             new_y = relative_y * new_screen_h 
             self.ball.rect.center = (round(new_x), round(new_y))
-            self.ball.pos = pg.math.Vector2(self.ball.rect.center)
+            self.ball.pos = pg.math.Vector2(self.ball.rect.topleft)
             self.ball.start_pos = (prep.SCREEN_W // 2, prep.SCREEN_H // 2 + tb)
+            self.ball.old_rect = self.ball.rect.copy()
             # Update game over label
             self.game_over_label.pos = (prep.SCREEN_RECT.centerx, prep.SCREEN_RECT.centery + tb)
             # Update countdown pos
             self.countdown.rect.center = (prep.SCREEN_RECT.centerx, prep.SCREEN_RECT.centery + tb)
-            #self.countdown.text_rect.center = (self.countdown.rect.centerx, self.countdown.rect.centery - 10)
+            self.countdown.text_rect.center = (self.countdown.rect.centerx, self.countdown.rect.centery - 10)
             if self.countdown.count == 1:
                 self.countdown.text_rect.centerx += 37
             else:
-                self.countdown.text_rect.center = (self.countdown.rect.centerx, self.countdown.rect.centery - 10)
+                self.countdown.text_rect.centerx = self.countdown.rect.centerx
                 
             if self.countdown.count == 0:
                 self.countdown.count = self.countdown.start_msg
                 self.countdown.text_rect.centerx = self.countdown.rect.centerx - 70
-            tools.prints_to_file(f'{self.p1.name} start pos: {self.p1.start_pos}', f'{self.p1.name} center: {self.p1.rect.center}')
-            tools.prints_to_file(f'{self.p2.name} start pos: {self.p2.start_pos}', f'{self.p2.name} center: {self.p2.rect.center}')
-            tools.print_to_file(f'countdown rect center: {self.countdown.rect.center}')
             
         else:
             # Update score positions
             self.scoreboard.score_1_rect.center = (prep.SCREEN_W * 0.25, 60)
             self.scoreboard.score_2_rect.center = (prep.SCREEN_W * 0.75, 60)
             # Reinitialise pitch
-            # pitch h p = 2033 - 160 = 2033
-            #pitch h ls = 1080 - 160 = 1080
             del self.pitch
             self.pitch = pitch.Pitch()
             old_screen_h = 1080
@@ -174,16 +170,18 @@ class Game(tools.State):
             relative_y = y / old_screen_h
             new_y = relative_y * new_screen_h
             self.p1.rect.center = (x, round(new_y))
-            self.p1.pos = pg.math.Vector2(self.p1.rect.center)
+            self.p1.pos = pg.math.Vector2(self.p1.rect.topleft)
             self.p1.start_pos = (200, prep.SCREEN_H // 2 + self.top_boundary)
+            self.p1.old_rect = self.p1.rect.copy()
             # Update p2 pos
             x = prep.SCREEN_W - 200
             y = self.p2.rect.centery
             relative_y = y / old_screen_h
             new_y = relative_y * new_screen_h
             self.p2.rect.center = (x, round(new_y))
-            self.p2.pos = pg.math.Vector2(self.p2.rect.center)
+            self.p2.pos = pg.math.Vector2(self.p2.rect.topleft)
             self.p2.start_pos = (prep.SCREEN_W - 200, prep.SCREEN_H // 2 + self.top_boundary)
+            self.p2.old_rect = self.p2.rect.copy()
             # Update ball pos
             x = self.ball.rect.centerx
             y = self.ball.rect.centery
@@ -192,22 +190,20 @@ class Game(tools.State):
             new_x = relative_x * new_screen_w
             new_y = relative_y * new_screen_h 
             self.ball.rect.center = (round(new_x), round(new_y))
-            self.ball.pos = pg.math.Vector2(self.ball.rect.center)
+            self.ball.pos = pg.math.Vector2(self.ball.rect.topleft)
             self.ball.start_pos = (prep.SCREEN_W // 2, prep.SCREEN_H // 2 + self.top_boundary)
+            self.ball.old_rect = self.ball.rect.copy()
             # Update game over label
             self.game_over_label.pos = (prep.SCREEN_RECT.centerx, prep.SCREEN_RECT.centery + self.top_boundary)
             # Update countdown pos
             self.countdown.rect.center = (prep.SCREEN_RECT.centerx, prep.SCREEN_RECT.centery + self.top_boundary)
-            #self.countdown.text_rect.center = (self.countdown.rect.centerx, self.countdown.rect.centery - 10)
+            self.countdown.text_rect.center = (self.countdown.rect.centerx, self.countdown.rect.centery - 10)
             if self.countdown.count == 1:
                 self.countdown.text_rect.centerx += 37
             else:
-                self.countdown.text_rect.center = (self.countdown.rect.centerx, self.countdown.rect.centery - 10)
+                self.countdown.text_rect.centerx = self.countdown.rect.centerx
                 
             if self.countdown.count == 0:
                 self.countdown.count = self.countdown.start_msg
                 self.countdown.text_rect.centerx = self.countdown.rect.centerx - 70
-            tools.prints_to_file(f'{self.p1.name} start pos: {self.p1.start_pos}', f'{self.p1.name} center: {self.p1.rect.center}')
-            tools.prints_to_file(f'{self.p2.name} start pos: {self.p2.start_pos}', f'{self.p2.name} center: {self.p2.rect.center}')
-            tools.print_to_file(f'countdown rect center: {self.countdown.rect.center}')
             
